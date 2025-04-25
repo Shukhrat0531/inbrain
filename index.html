@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифровое Агентство - Inbrain</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Подключаем Google Fonts для современного шрифта -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Подключаем Three.js r128 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Шейдеры для частиц -->
+    <script type="x-shader/x-vertex" id="vertexshader">
+        attribute float size;
+        attribute vec3 customColor;
+        varying vec3 vColor;
+
+        void main() {
+            vColor = customColor;
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (300.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    </script>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        uniform vec3 color;
+        uniform sampler2D pointTexture;
+        varying vec3 vColor;
+
+        void main() {
+            gl_FragColor = vec4(color * vColor, 1.0);
+            gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+        }
+    </script>
+
+    <!-- Шапка -->
+    
+<header>
+    <div class="container">
+        <div class="logo">Inbrain</div>
+        <nav>
+            <div class="burger-menu" id="burger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="nav-menu">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#portfolio">Портфолио</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+    <!-- Hero секция с новым фоном частиц -->
+   <!-- Hero секция -->
+<section class="hero" id="home">
+    <div id="magic"></div> <!-- Контейнер для частиц (будет скрыт на мобильных) -->
+    <div id="wats" class="container">
+        <img src="ChatGPT Image 19 апр. 2025 г., 17_22_24.png" alt="Inbrain Mobile" class="inbrain-mobile-img" />
+        <h1 class="mobile-title">Займите лидирующие позиции и развивайте бизнес с Inbrain.</h1> <!-- Текст для мобильных -->
+        <p>Займите лидирующие позиции и развивайте бизнес с Inbrain.</p>
+       
+       <br>
+        <div  class="buttons">
+            <a href="https://wa.me/77478707743" target="_blank" class="cta-button">Написать в WhatsApp</a>
+        </div>
+        <div class="trusted-by">
+            <p>Нам доверяют более 100</p>
+            <div class="logos">
+                <span>Talant</span>
+                <span>Samuruq Mebel</span>
+                <span>HubSpot</span>
+                <span>Master Burger</span>
+                <span>DoDoma</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Услуги -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Начните свой путь к цифровому успеху с Inbrain.</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>Веб-разработка</h3>
+                    <p>Создаем современные и функциональные сайты для вашего бизнеса.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Цифровой маркетинг</h3>
+                    <p>Продвигаем ваш бренд в интернете с максимальной отдачей.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Графический дизайн</h3>
+                    <p>Разрабатываем уникальный визуальный стиль для вашего проекта.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Мобильные приложения</h3>
+                    <p>Создаем удобные и современные приложения для iOS и Android.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Кибербезопасность</h3>
+                    <p>Обеспечиваем защиту ваших данных и бизнеса.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Консультации и обучение</h3>
+                    <p>Помогаем вашей команде освоить цифровые технологии.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Статистика -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>+64%</h3>
+                    <p>Рост трафика</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+83%</h3>
+                    <p>Охват клиентов</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+31%</h3>
+                    <p>Рост продаж</p>
+                </div>
+                <div class="stat-item">
+                    <h3>4.7</h3>
+                    <p>Оценка клиентов</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+   <!-- Тарифы -->
+<!-- Тарифы -->
+<section class="pricing">
+    <div class="container">
+        <h2>Прозрачные цены. Никаких сюрпризов.</h2>
+        <div class="pricing-grid">
+            <div class="price-item startup">
+                <h3>Start up.</h3>
+                <p class="price">от 20 000 тг<span></span></p>
+                <ul>
+                    <li>Лендинг</li>
+                    <li>SEO-оптимизация</li>
+                    <li>Форма обратной связи</li>
+                </ul>
+                <a href="#wats"><button class="order-button">Узнать</button></a>
+            </div>
+            <div class="price-item business">
+                <h3>Most Business.</h3>
+                <p class="price">100 000 тг <span></span></p>
+                <ul>
+                    <li>Корпаративный сайт</li>
+                    <li>Управление соцсетями</li>
+                    <li>Ежемесячные отчеты</li>
+                </ul>
+                <a href="#wats"><button class="order-button">Узнать</button></a>
+            </div>
+            <div class="price-item pro">
+                <h3>Pro.</h3>
+                <p class="price">200 000 тг <span></span></p>
+                <ul>
+                    <li>Индивидуальная разработка</li>
+                    <li>Полная маркетинговая стратегия</li>
+                    <li>Премиум-поддержка</li>
+                </ul>
+                <a href="#wats"><button class="order-button">Узнать</button></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Портфолио -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2>Наши проекты</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="/Users/shukhrat/Downloads/Снимок_экрана_387.png" alt="Проект 3">
+                        <div class="overlay">
+                            <a href="https://www.ithub.kz/" class="view-project">Посмотреть проект</a>
+                        </div>
+                    </div>
+                    <h3>Проект 3</h3>
+                    <p>Сайт для учебного центра
+                    </p>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="Снимок_экрана_384.png" alt="Проект 1">
+                        <div class="overlay">
+                            <a href="#" class="view-project">Посмотреть проект</a>
+                        </div>
+                    </div>
+                    <h3>Проект 1</h3>
+                    <p>Современный веб-сайт для стартапа в сфере технологий.</p>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="Снимок_экрана_389.png" alt="Проект 2">
+                        <div class="overlay">
+                            <a href="#" class="view-project">Посмотреть проект</a>
+                        </div>
+                    </div>
+                    <h3>Проект 2</h3>
+                    <p>Мобильное приложение для управления финансами.</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Inbrain.</div>
+                <div class="footer-links">
+                    <h4>Услуги</h4>
+                    <ul>
+                        <li>Веб-разработка</li>
+                        <li>Цифровой маркетинг</li>
+                        <li>Графический дизайн</li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Поддержка</h4>
+                    <ul>
+                        <li>Часто задаваемые вопросы</li>
+                        <li>Связаться с нами</li>
+                        <li>Центр помощи</li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <p>inbrain@gmail.com</p>
+                </div>
+            </div>
+            <p class="footer-bottom">© 2025 Inbrain. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

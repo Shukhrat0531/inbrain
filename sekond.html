@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цифровое Агентство - Inbrain</title>
+    <!-- Подключаем Google Fonts для современного шрифта -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Подключаем Three.js r128 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        /* Шапка */
+        header {
+            background: #000000; /* Чёрный фон */
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff; /* Белый текст */
+            background: linear-gradient(45deg, #007bff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 2.5rem;
+        }
+
+        nav ul li a {
+            color: #fff; /* Белый текст */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #00ff88; /* Цвет при наведении */
+        }
+
+        /* Бургер-меню (скрыто на десктопе) */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .burger-menu span {
+            width: 100%;
+            height: 3px;
+            background: #fff; /* Белые полоски */
+            transition: all 0.3s ease;
+        }
+
+        /* Hero секция */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            padding-top: 80px;
+            overflow: hidden;
+            background: #1a1a1a; /* Чёрный фон */
+        }
+
+        #magic {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            display: block;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .hero .container {
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            visibility: hidden; /* Скрыто для эффекта частиц */
+        }
+
+        /* Заголовок для мобильных */
+        .hero .mobile-title {
+            display: none; /* Скрыт на десктопе */
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #ddd;
+            display: none; /* Скрыт на десктопе, так как текст совпадает с mobile-title */
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, #28a745, #34d058);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        .trusted-by {
+            margin-top: 3rem;
+        }
+
+        .trusted-by p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        .logos {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .logos span {
+            font-size: 1.1rem;
+            color: #fff;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .logos span:hover {
+            opacity: 1;
+        }
+
+        /* Услуги */
+        .services {
+            padding: 5rem 0;
+            text-align: center;
+            background: #fff;
+        }
+
+        .services h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .services h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, #007bff, #00ff88);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-item {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .service-item:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-item h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-item p {
+            color: #666;
+        }
+
+        /* Статистика */
+        .stats {
+            background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+            color: #fff;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: space-around;
+            gap: 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #007bff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        /* Тарифы */
+        .pricing {
+            padding: 5rem 0;
+            text-align: center;
+            background: #fff;
+        }
+
+        .pricing h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .pricing h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, #007bff, #00ff88);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .price-item {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Цветные заголовки для каждого тарифного плана */
+        .price-item h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 1rem;
+            color: #fff;
+            margin: -2rem -2rem 1rem -2rem;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        /* Цвета для каждого плана */
+        .price-item.startup h3 {
+            background: linear-gradient(45deg, #ff5733, #ff8c66);
+        }
+
+        .price-item.business h3 {
+            background: linear-gradient(45deg, #007bff, #66b3ff);
+        }
+
+        .price-item.pro h3 {
+            background: linear-gradient(45deg, #28a745, #66cc99);
+        }
+
+        .price-item .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-item .price span {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .price-item ul {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .price-item ul li {
+            margin-bottom: 1rem;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        /* Стили для кнопки Order Now */
+        .order-button {
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Цвета кнопок для каждого плана */
+        .price-item.startup .order-button {
+            background: linear-gradient(45deg, #ff5733, #ff8c66);
+        }
+
+        .price-item.business .order-button {
+            background: linear-gradient(45deg, #007bff, #66b3ff);
+        }
+
+        .price-item.pro .order-button {
+            background: linear-gradient(45deg, #28a745, #66cc99);
+        }
+
+        .order-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Портфолио */
+        .portfolio {
+            padding: 5rem 0;
+            text-align: center;
+            background: #f9f9f9;
+        }
+
+        .portfolio h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .portfolio h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, #007bff, #00ff88);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .portfolio-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .view-project {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(45deg, #007bff, #00ff88);
+            border-radius: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .view-project:hover {
+            transform: scale(1.05);
+        }
+
+        .portfolio-item h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 1rem 0 0.5rem;
+            color: #333;
+        }
+
+        .portfolio-item p {
+            color: #666;
+        }
+
+        /* Футер */
+        footer {
+            background: linear-gradient(135deg, #000000, #2c2c2c);
+            color: #fff;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .footer-links h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 0.5rem;
+            color: #ccc;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links ul li:hover {
+            color: #007bff;
+        }
+
+        .footer-contact p {
+            font-size: 1.3rem;
+            color: #ccc;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Анимации */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            /* Шапка */
+            .burger-menu {
+                display: flex;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #1a1a1a; /* Чёрный фон для меню */
+                padding: 1rem 0;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 1rem 0;
+                text-align: center;
+            }
+
+            /* Анимация бургер-меню при открытии */
+            .burger-menu.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .burger-menu.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .burger-menu.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            /* Hero секция */
+            .hero {
+                height: auto;
+                padding: 100px 0;
+                text-align: center;
+            }
+
+            /* Эффект частиц центрируется на мобильных */
+            #magic {
+                display: block; /* Показываем эффект частиц */
+                left: 50%;
+                transform: translateX(-50%); /* Центрируем */
+                width: 100%;
+                max-width: 600px; /* Ограничиваем ширину для лучшего отображения */
+            }
+
+            .hero h1 {
+                display: none; /* Скрываем заголовок для частиц */
+            }
+
+            .hero .mobile-title {
+                display: block; /* Показываем заголовок для мобильных */
+            }
+
+            .hero p {
+                display: none; /* Текст не нужен, так как он дублируется в mobile-title */
+            }
+
+            .buttons {
+                justify-content: center;
+            }
+
+            .trusted-by {
+                text-align: center;
+            }
+
+            .logos {
+                display: flex;
+                overflow-x: auto; /* Горизонтальная прокрутка */
+                gap: 1.5rem;
+                padding: 1rem 0;
+                white-space: nowrap; /* Не переносим текст */
+            }
+
+            .logos span {
+                font-size: 1rem;
+            }
+
+            /* Остальные секции */
+            .services-grid, .pricing-grid, .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шейдеры для частиц -->
+    <script type="x-shader/x-vertex" id="vertexshader">
+        attribute float size;
+        attribute vec3 customColor;
+        varying vec3 vColor;
+
+        void main() {
+            vColor = customColor;
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (300.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    </script>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        uniform vec3 color;
+        uniform sampler2D pointTexture;
+        varying vec3 vColor;
+
+        void main() {
+            gl_FragColor = vec4(color * vColor, 1.0);
+            gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+        }
+    </script>
+
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="logo">Inbrain</div>
+            <nav>
+                <div class="burger-menu" id="burger-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul id="nav-menu">
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#portfolio">Портфолио</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero секция -->
+    <section class="hero" id="home">
+        <div id="magic"></div> <!-- Контейнер для частиц -->
+        <div class="container">
+            <h1>Inbrain</h1> <!-- Текст для частиц -->
+            <h1 class="mobile-title">Займите лидирующие позиции и развивайте бизнес с Inbrain.</h1> <!-- Текст для мобильных -->
+            <p>Займите лидирующие позиции и развивайте бизнес с Inbrain.</p>
+            <div class="buttons">
+                <a href="https://wa.me/1234567890" target="_blank" class="cta-button">Написать в WhatsApp</a>
+            </div>
+            <div class="trusted-by">
+                <p>Нам доверяют более 100</p>
+                <div class="logos">
+                    <span>Talant</span>
+                    <span>Samuruq Mebel</span>
+                    <span>HubSpot</span>
+                    <span>Master Burger</span>
+                    <span>DoDoma</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Услуги -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2>Начните свой путь к цифровому успеху с Inbrain.</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <h3>Веб-разработка</h3>
+                    <p>Создаем современные и функциональные сайты для вашего бизнеса.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Цифровой маркетинг</h3>
+                    <p>Продвигаем ваш бренд в интернете с максимальной отдачей.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Графический дизайн</h3>
+                    <p>Разрабатываем уникальный визуальный стиль для вашего проекта.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Мобильные приложения</h3>
+                    <p>Создаем удобные и современные приложения для iOS и Android.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Кибербезопасность</h3>
+                    <p>Обеспечиваем защиту ваших данных и бизнеса.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Консультации и обучение</h3>
+                    <p>Помогаем вашей команде освоить цифровые технологии.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Статистика -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>+64%</h3>
+                    <p>Рост трафика</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+83%</h3>
+                    <p>Охват клиентов</p>
+                </div>
+                <div class="stat-item">
+                    <h3>+31%</h3>
+                    <p>Рост продаж</p>
+                </div>
+                <div class="stat-item">
+                    <h3>4.7</h3>
+                    <p>Оценка клиентов</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Тарифы -->
+    <section class="pricing">
+        <div class="container">
+            <h2>Прозрачные цены. Никаких сюрпризов.</h2>
+            <div class="pricing-grid">
+                <div class="price-item startup">
+                    <h3>Start up.</h3>
+                    <p class="price">от 20 000 тг<span></span></p>
+                    <ul>
+                        <li>Лендинг</li>
+                        <li>SEO-оптимизация</li>
+                        <li>Форма обратной связи</li>
+                    </ul>
+                    <button class="order-button">Узнать</button>
+                </div>
+                <div class="price-item business">
+                    <h3>Most Business.</h3>
+                    <p class="price">100 000 тг <span></span></p>
+                    <ul>
+                        <li>Корпаративный сайт</li>
+                        <li>Управление соцсетями</li>
+                        <li>Ежемесячные отчеты</li>
+                    </ul>
+                    <button class="order-button">Узнать</button>
+                </div>
+                <div class="price-item pro">
+                    <h3>Pro.</h3>
+                    <p class="price">200 000 тг <span></span></p>
+                    <ul>
+                        <li>Индивидуальная разработка</li>
+                        <li>Полная маркетинговая стратегия</li>
+                        <li>Премиум-поддержка</li>
+                    </ul>
+                    <button class="order-button">Узнать</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Портфолио -->
+    <section class="portfolio" id="portfolio">
+        <div class="container">
+            <h2>Наши проекты</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://via.placeholder.com/400x300?text=Project+1" alt="Проект 1">
+                        <div class="overlay">
+                            <a href="#" class="view-project">Посмотреть проект</a>
+                        </div>
+                    </div>
+                    <h3>Проект 1</h3>
+                    <p>Современный веб-сайт для стартапа в сфере технологий.</p>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://via.placeholder.com/400x300?text=Project+2" alt="Проект 2">
+                        <div class="overlay">
+                            <a href="#" class="view-project">Посмотреть проект</a>
+                        </div>
+                    </div>
+                    <h3>Проект 2</h3>
+                    <p>Мобильное приложение для управления финансами.</p>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <img src="https://via.placeholder.com/400x300?text=Project+3" alt="Проект 3">
+                        <div class="overlay">
+                            <a href="#" class="view-project">Посмотреть проект</a>
+                        </div>
+                    </div>
+                    <h3>Проект 3</h3>
+                    <p>Креативный брендинг для модного магазина.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Inbrain.</div>
+                <div class="footer-links">
+                    <h4>Услуги</h4>
+                    <ul>
+                        <li>Веб-разработка</li>
+                        <li>Цифровой маркетинг</li>
+                        <li>Графический дизайн</li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Поддержка</h4>
+                    <ul>
+                        <li>Часто задаваемые вопросы</li>
+                        <li>Связаться с нами</li>
+                        <li>Центр помощи</li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <p>hello@yourdomain.id</p>
+                </div>
+            </div>
+            <p class="footer-bottom">© 2025 Inbrain. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для создания программной текстуры частиц
+        function createParticleTexture() {
+            const canvas = document.createElement("canvas");
+            canvas.width = 32;
+            canvas.height = 32;
+            const context = canvas.getContext("2d");
+
+            // Рисуем круг
+            context.beginPath();
+            context.arc(16, 16, 16, 0, Math.PI * 2);
+            context.fillStyle = "#ffffff";
+            context.fill();
+            context.closePath();
+
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        // Эффект частиц для hero-секции
+        const preload = () => {
+            let manager = new THREE.LoadingManager();
+            manager.onLoad = function () {
+                console.log("Ресурсы загружены, инициализация эффекта...");
+                const environment = new Environment(typo, particle);
+            };
+            manager.onError = function (url) {
+                console.error("Ошибка загрузки ресурса: " + url);
+            };
+
+            var typo = null;
+            const loader = new THREE.FontLoader(manager);
+            const fontUrl =
+                "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json";
+            loader.load(
+                fontUrl,
+                function (font) {
+                    typo = font;
+                    console.log("Шрифт загружен");
+                },
+                undefined,
+                function (error) {
+                    console.error("Ошибка загрузки шрифта:", error);
+                }
+            );
+
+            const particle = createParticleTexture();
+            console.log("Текстура частиц создана");
+        };
+
+        if (
+            document.readyState === "complete" ||
+            (document.readyState !== "loading" && !document.documentElement.doScroll)
+        )
+            preload();
+        else document.addEventListener("DOMContentLoaded", preload);
+
+        class Environment {
+            constructor(font, particle) {
+                this.font = font;
+                this.particle = particle;
+                this.container = document.querySelector("#magic");
+                if (!this.container) {
+                    console.error("Контейнер #magic не найден!");
+                    return;
+                }
+                this.scene = new THREE.Scene();
+                this.createCamera();
+                this.createRenderer();
+                this.setup();
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                window.addEventListener("resize", this.onWindowResize.bind(this));
+            }
+
+            setup() {
+                this.createParticles = new CreateParticles(
+                    this.scene,
+                    this.font,
+                    this.particle,
+                    this.camera,
+                    this.renderer
+                );
+            }
+
+            render() {
+                if (this.createParticles) {
+                    this.createParticles.render();
+                }
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            createCamera() {
+                this.camera = new THREE.PerspectiveCamera(
+                    65,
+                    this.container.clientWidth / this.container.clientHeight,
+                    1,
+                    10000
+                );
+                this.camera.position.set(0, 0, 100);
+            }
+
+            createRenderer() {
+                this.renderer = new THREE.WebGLRenderer({ antialias: true });
+                this.renderer.setSize(
+                    this.container.clientWidth,
+                    this.container.clientHeight
+                );
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                this.renderer.outputEncoding = THREE.sRGBEncoding;
+                this.container.appendChild(this.renderer.domElement);
+                this.renderer.setAnimationLoop(() => {
+                    this.render();
+                });
+            }
+
+            onWindowResize() {
+                this.camera.aspect =
+                    this.container.clientWidth / this.container.clientHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(
+                    this.container.clientWidth,
+                    this.container.clientHeight
+                );
+            }
+        }
+
+        class CreateParticles {
+            constructor(scene, font, particleImg, camera, renderer) {
+                this.scene = scene;
+                this.font = font;
+                this.particleImg = particleImg;
+                this.camera = camera;
+                this.renderer = renderer;
+
+                this.raycaster = new THREE.Raycaster();
+                this.mouse = new THREE.Vector2(-200, 200);
+
+                this.colorChange = new THREE.Color();
+
+                this.buttom = false;
+
+                this.data = {
+                    text: "Inbrain.kz..",
+                    amount: 1500,
+                    particleSize: 1,
+                    particleColor: 0xffffff,
+                    textSize: 16,
+                    area: 250,
+                    ease: 0.05,
+                };
+
+                this.setup();
+                this.bindEvents();
+            }
+
+            setup() {
+                const geometry = new THREE.PlaneGeometry(
+                    this.visibleWidthAtZDepth(100, this.camera),
+                    this.visibleHeightAtZDepth(100, this.camera)
+                );
+                const material = new THREE.MeshBasicMaterial({
+                    color: 0x00ff00,
+                    transparent: true,
+                });
+                this.planeArea = new THREE.Mesh(geometry, material);
+                this.planeArea.visible = false;
+                this.scene.add(this.planeArea);
+                this.createText();
+            }
+
+            bindEvents() {
+                document.addEventListener("mousedown", this.onMouseDown.bind(this));
+                document.addEventListener("mousemove", this.onMouseMove.bind(this));
+                document.addEventListener("mouseup", this.onMouseUp.bind(this));
+            }
+
+            onMouseDown() {
+                this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+                const vector = new THREE.Vector3(this.mouse.x, this.mouse.y, 0.5);
+                vector.unproject(this.camera);
+                const dir = vector.sub(this.camera.position).normalize();
+                const distance = -this.camera.position.z / dir.z;
+                this.currenPosition = this.camera.position
+                    .clone()
+                    .add(dir.multiplyScalar(distance));
+
+                const pos = this.particles.geometry.attributes.position;
+                this.buttom = true;
+                this.data.ease = 0.01;
+            }
+
+            onMouseUp() {
+                this.buttom = false;
+                this.data.ease = 0.05;
+            }
+
+            onMouseMove() {
+                this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            }
+
+            render() {
+                const time = ((0.001 * performance.now()) % 12) / 12;
+                const zigzagTime = (1 + Math.sin(time * 2 * Math.PI)) / 6;
+
+                this.raycaster.setFromCamera(this.mouse, this.camera);
+
+                const intersects = this.raycaster.intersectObject(this.planeArea);
+
+                if (intersects.length > 0) {
+                    const pos = this.particles.geometry.attributes.position;
+                    const copy = this.geometryCopy.attributes.position;
+                    const coulors = this.particles.geometry.attributes.customColor;
+                    const size = this.particles.geometry.attributes.size;
+
+                    const mx = intersects[0].point.x;
+                    const my = intersects[0].point.y;
+                    const mz = intersects[0].point.z;
+
+                    for (var i = 0, l = pos.count; i < l; i++) {
+                        const initX = copy.getX(i);
+                        const initY = copy.getY(i);
+                        const initZ = copy.getZ(i);
+
+                        let px = pos.getX(i);
+                        let py = pos.getY(i);
+                        let pz = pos.getZ(i);
+
+                        // Изменяем цвет частиц при наведении
+                        if (
+                            this.mouse.x > -1 &&
+                            this.mouse.x < 1 &&
+                            this.mouse.y > -1 &&
+                            this.mouse.y < 1
+                        ) {
+                            this.colorChange.setRGB(0, 1, 0); // Зеленый цвет (RGB: 0, 1, 0)
+                        } else {
+                            this.colorChange.setHSL(0.5, 1, 1); // Исходный цвет
+                        }
+                        coulors.setXYZ(
+                            i,
+                            this.colorChange.r,
+                            this.colorChange.g,
+                            this.colorChange.b
+                        );
+                        coulors.needsUpdate = true;
+
+                        size.array[i] = this.data.particleSize;
+                        size.needsUpdate = true;
+
+                        let dx = mx - px;
+                        let dy = my - py;
+                        const dz = mz - pz;
+
+                        const mouseDistance = this.distance(mx, my, px, py);
+                        let d = (dx = mx - px) * dx + (dy = my - py) * dy;
+                        const f = -this.data.area / d;
+
+                        if (this.buttom) {
+                            const t = Math.atan2(dy, dx);
+                            px -= f * Math.cos(t);
+                            py -= f * Math.sin(t);
+
+                            this.colorChange.setHSL(0.5 + zigzagTime, 1.0, 0.5);
+                            coulors.setXYZ(
+                                i,
+                                this.colorChange.r,
+                                this.colorChange.g,
+                                this.colorChange.b
+                            );
+                            coulors.needsUpdate = true;
+
+                            if (
+                                px > initX + 70 ||
+                                px < initX - 70 ||
+                                py > initY + 70 ||
+                                py < initY - 70
+                            ) {
+                                this.colorChange.setHSL(0.15, 1.0, 0.5);
+                                coulors.setXYZ(
+                                    i,
+                                    this.colorChange.r,
+                                    this.colorChange.g,
+                                    this.colorChange.b
+                                );
+                                coulors.needsUpdate = true;
+                            }
+                        } else {
+                            if (mouseDistance < this.data.area) {
+                                if (i % 5 == 0) {
+                                    const t = Math.atan2(dy, dx);
+                                    px -= 0.03 * Math.cos(t);
+                                    py -= 0.03 * Math.sin(t);
+
+                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
+                                    coulors.setXYZ(
+                                        i,
+                                        this.colorChange.r,
+                                        this.colorChange.g,
+                                        this.colorChange.b
+                                    );
+                                    coulors.needsUpdate = true;
+
+                                    size.array[i] = this.data.particleSize / 1.2;
+                                    size.needsUpdate = true;
+                                } else {
+                                    const t = Math.atan2(dy, dx);
+                                    px += f * Math.cos(t);
+                                    py += f * Math.sin(t);
+
+                                    pos.setXYZ(i, px, py, pz);
+                                    pos.needsUpdate = true;
+
+                                    size.array[i] = this.data.particleSize * 1.3;
+                                    size.needsUpdate = true;
+                                }
+
+                                if (
+                                    px > initX + 10 ||
+                                    px < initX - 10 ||
+                                    py > initY + 10 ||
+                                    py < initY - 10
+                                ) {
+                                    this.colorChange.setHSL(0.15, 1.0, 0.5);
+                                    coulors.setXYZ(
+                                        i,
+                                        this.colorChange.r,
+                                        this.colorChange.g,
+                                        this.colorChange.b
+                                    );
+                                    coulors.needsUpdate = true;
+
+                                    size.array[i] = this.data.particleSize / 1.8;
+                                    size.needsUpdate = true;
+                                }
+                            }
+                        }
+
+                        px += (initX - px) * this.data.ease;
+                        py += (initY - py) * this.data.ease;
+                        pz += (initZ - pz) * this.data.ease;
+
+                        pos.setXYZ(i, px, py, pz);
+                        pos.needsUpdate = true;
+                    }
+                }
+            }
+
+            createText() {
+                if (!this.font) {
+                    console.error("Шрифт не загружен!");
+                    return;
+                }
+
+                let thePoints = [];
+
+                let shapes = this.font.generateShapes(this.data.text, this.data.textSize);
+                let geometry = new THREE.ShapeGeometry(shapes);
+                geometry.computeBoundingBox();
+
+                const xMid =
+                    -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+                const yMid =
+                    (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
+
+                // Центрируем текст
+                geometry.center();
+
+                let holeShapes = [];
+
+                for (let q = 0; q < shapes.length; q++) {
+                    let shape = shapes[q];
+                    if (shape.holes && shape.holes.length > 0) {
+                        for (let j = 0; j < shape.holes.length; j++) {
+                            let hole = shape.holes[j];
+                            holeShapes.push(hole);
+                        }
+                    }
+                }
+                shapes.push.apply(shapes, holeShapes);
+
+                let colors = [];
+                let sizes = [];
+
+                for (let x = 0; x < shapes.length; x++) {
+                    let shape = shapes[x];
+                    const amountPoints =
+                        shape.type == "Path" ? this.data.amount / 2 : this.data.amount;
+
+                    let points = shape.getSpacedPoints(amountPoints);
+
+                    points.forEach((element, z) => {
+                        const a = new THREE.Vector3(element.x, element.y, 0);
+                        thePoints.push(a);
+                        colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
+                        sizes.push(1);
+                    });
+                }
+
+                let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
+
+                // Смещение влево на десктопе
+                if (window.innerWidth > 768) {
+                    geoParticles.translate(xMid - 150, yMid, 0); // Смещаем влево на 150 единиц
+                } else {
+                    geoParticles.translate(xMid, yMid, 0); // Центрируем на мобильных
+                }
+
+                geoParticles.setAttribute(
+                    "customColor",
+                    new THREE.Float32BufferAttribute(colors, 3)
+                );
+                geoParticles.setAttribute(
+                    "size",
+                    new THREE.Float32BufferAttribute(sizes, 1)
+                );
+
+                const material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        color: { value: new THREE.Color(0xffffff) },
+                        pointTexture: { value: this.particleImg },
+                    },
+                    vertexShader: document.getElementById("vertexshader").textContent,
+                    fragmentShader: document.getElementById("fragmentshader").textContent,
+                    blending: THREE.AdditiveBlending,
+                    depthTest: false,
+                    transparent: true,
+                });
+
+                this.particles = new THREE.Points(geoParticles, material);
+                this.scene.add(this.particles);
+
+                this.geometryCopy = new THREE.BufferGeometry();
+                this.geometryCopy.copy(this.particles.geometry);
+            }
+
+            visibleHeightAtZDepth(depth, camera) {
+                const cameraOffset = camera.position.z;
+                if (depth < cameraOffset) depth -= cameraOffset;
+                else depth += cameraOffset;
+
+                const vFOV = (camera.fov * Math.PI) / 180;
+                return 2 * Math.tan(vFOV / 2) * Math.abs(depth);
+            }
+
+            visibleWidthAtZDepth(depth, camera) {
+                const height = this.visibleHeightAtZDepth(depth, camera);
+                return height * camera.aspect;
+            }
+
+            distance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+            }
+        }
+
+        // Эффект смещения для карточек (услуги, тарифы, портфолио)
+        const items = document.querySelectorAll(
+            ".service-item, .price-item, .portfolio-item"
+        );
+
+        items.forEach((item) => {
+            item.addEventListener("mousemove", (e) => {
+                const rect = item.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                const moveX = (x / rect.width) * 10;
+                const moveY = (y / rect.height) * 10;
+
+                item.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+
+            item.addEventListener("mouseleave", () => {
+                item.style.transform = "translate(0, 0)";
+            });
+        });
+
+        // Бургер-меню
+        document.addEventListener("DOMContentLoaded", () => {
+            const burgerMenu = document.getElementById("burger-menu");
+            const navMenu = document.getElementById("nav-menu");
+
+            burgerMenu.addEventListener("click", () => {
+                burgerMenu.classList.toggle("active");
+                navMenu.classList.toggle("active");
+            });
+        });
+    </script>
+</body>
+</html>

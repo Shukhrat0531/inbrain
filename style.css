@@ -1,0 +1,857 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+/* Шапка */
+header {
+    background: #000000; /* Чёрный фон */
+    padding: 1.5rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff; /* Белый текст */
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 2.5rem;
+}
+
+nav ul li a {
+    color: #fff; /* Белый текст */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #00ff88; /* Цвет при наведении */
+}
+
+/* Бургер-меню (скрыто на десктопе) */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.burger-menu span {
+    width: 100%;
+    height: 3px;
+    background: #fff; /* Белые полоски */
+    transition: all 0.3s ease;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .burger-menu {
+        display: flex;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: #1a1a1a; /* Чёрный фон для меню */
+        padding: 1rem 0;
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 1rem 0;
+        text-align: center;
+    }
+
+    /* Анимация бургер-меню при открытии */
+    .burger-menu.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .burger-menu.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .burger-menu.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+}
+/* Hero секция с новым фоном частиц */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding-top: 80px;
+    overflow: hidden;
+    background: #1a1a1a; /* Темный фон для контраста с частицами */
+}
+
+#magic {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 1; /* Увеличиваем z-index, чтобы частицы были видны */
+}
+
+.hero .container {
+    z-index: 2; /* Контент поверх частиц */
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    visibility: hidden; /* Скрываем текст, так как он отображается частицами */
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: #ddd;
+}
+
+.buttons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.cta-button {
+    padding: 1rem 2.5rem;
+    background: linear-gradient(45deg, #28a745, #34d058);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.trusted-by {
+    margin-top: 3rem;
+}
+
+.trusted-by p {
+    font-size: 1rem;
+    color: #ddd;
+}
+
+.logos {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.logos span {
+    font-size: 1.1rem;
+    color: #fff;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.logos span:hover {
+    opacity: 1;
+}
+
+/* Услуги */
+.services {
+    padding: 5rem 0;
+    text-align: center;
+    background: #fff;
+}
+
+.services h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #333;
+    position: relative;
+}
+
+.services h2::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.service-item {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.service-item:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.service-item h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.service-item p {
+    color: #666;
+}
+
+/* Статистика */
+.stats {
+    background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    color: #fff;
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.stat-item h3 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-item p {
+    font-size: 1.1rem;
+    color: #ccc;
+}
+
+/* Тарифы */
+.pricing {
+    padding: 5rem 0;
+    text-align: center;
+    background: #fff;
+}
+
+.pricing h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #333;
+    position: relative;
+}
+
+.pricing h2::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.price-item {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 15px;
+    text-align: left;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.price-item:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.price-item h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.price-item .price {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #28a745;
+    margin-bottom: 1rem;
+}
+
+.price-item .price span {
+    font-size: 1rem;
+    color: #666;
+}
+
+.price-item ul {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.price-item ul li {
+    margin-bottom: 0.8rem;
+    color: #666;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.price-item ul li::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    color: #28a745;
+}
+
+/* Портфолио */
+.portfolio {
+    padding: 5rem 0;
+    text-align: center;
+    background: #f9f9f9;
+}
+
+.portfolio h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #333;
+    position: relative;
+}
+
+.portfolio h2::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.portfolio-item {
+    position: relative;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+}
+
+.portfolio-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-image img {
+    transform: scale(1.05);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .overlay {
+    opacity: 1;
+}
+
+.view-project {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.8rem 1.5rem;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    border-radius: 25px;
+    transition: transform 0.3s ease;
+}
+
+.view-project:hover {
+    transform: scale(1.05);
+}
+
+.portfolio-item h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem;
+    color: #333;
+}
+
+.portfolio-item p {
+    color: #666;
+}
+
+/* Футер */
+footer {
+    background: linear-gradient(135deg, #000000, #2c2c2c);
+    color: #fff;
+    padding: 3rem 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.footer-links h4 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li {
+    margin-bottom: 0.5rem;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.footer-links ul li:hover {
+    color: #007bff;
+}
+
+.footer-contact p {
+    font-size: 1.3rem;
+    color: #ccc;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Анимации */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .services-grid, .pricing-grid, .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+/* Тарифы */
+.pricing {
+    padding: 5rem 0;
+    text-align: center;
+    background: #fff;
+}
+
+.pricing h2 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #333;
+    position: relative;
+}
+
+.pricing h2::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(45deg, #007bff, #00ff88);
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.price-item {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.price-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Цветные заголовки для каждого тарифного плана */
+.price-item h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 1rem;
+    color: #fff;
+    margin: -2rem -2rem 1rem -2rem;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Цвета для каждого плана */
+.price-item.startup h3 {
+    background: linear-gradient(45deg, #ff5733, #ff8c66);
+}
+
+.price-item.business h3 {
+    background: linear-gradient(45deg, #007bff, #66b3ff);
+}
+
+.price-item.pro h3 {
+    background: linear-gradient(45deg, #28a745, #66cc99);
+}
+
+.price-item .price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.price-item .price span {
+    font-size: 1rem;
+    color: #666;
+}
+
+.price-item ul {
+    list-style: none;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.price-item ul li {
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+/* Стили для кнопки Order Now */
+.order-button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Цвета кнопок для каждого плана */
+.price-item.startup .order-button {
+    background: linear-gradient(45deg, #ff5733, #ff8c66);
+}
+
+.price-item.business .order-button {
+    background: linear-gradient(45deg, #007bff, #66b3ff);
+}
+
+.price-item.pro .order-button {
+    background: linear-gradient(45deg, #28a745, #66cc99);
+}
+
+.order-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Hero секция */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding-top: 80px;
+    overflow: hidden;
+    background: #1a1a1a; /* Чёрный фон */
+}
+
+#magic {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.hero .container {
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    visibility: hidden; /* Скрыто для эффекта частиц на десктопе */
+}
+
+/* Заголовок для мобильных */
+.hero .mobile-title {
+    display: none; /* Скрыт на десктопе */
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: #ddd;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 200px;
+    justify-content: center;
+}
+
+.cta-button {
+    padding: 1rem 2.5rem;
+    background: linear-gradient(45deg, #28a745, #34d058);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.trusted-by {
+    margin-top: 3rem;
+}
+
+.trusted-by p {
+    font-size: 1rem;
+    color: #ddd;
+}
+
+.logos {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.logos span {
+    font-size: 1.1rem;
+    color: #fff;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.logos span:hover {
+    opacity: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .hero {
+        height: auto;
+        padding: 100px 0;
+        text-align: center;
+    }
+
+    #magic {
+        height: 400px; /* Скрываем эффект частиц на мобильных */
+    }
+
+    .hero h1 {
+        /* Скрываем заголовок для частиц */
+    }
+
+    .hero .mobile-title {
+     
+    }
+
+    .hero p {
+         /* Текст не нужен, так как он дублируется в mobile-title */
+    }
+
+    .buttons {
+        justify-content: center;
+    }
+
+    .trusted-by {
+        text-align: center;
+    }
+
+    .logos {
+        display: flex;
+        overflow-x: auto; /* Горизонтальная прокрутка */
+        gap: 1.5rem;
+        padding: 1rem 0;
+        white-space: nowrap; /* Не переносим текст */
+    }
+
+    .logos span {
+        font-size: 1rem;
+    }
+}
+
+.inbrain-mobile-img {
+  display: none;
+  max-width: 250px;
+  margin: 0 auto 1.5rem;
+}
+
+@media (max-width: 768px) {
+  #magic {
+    display: none; /* Убираем эффект на мобилке */
+  }
+
+  .inbrain-mobile-img {
+    display: block;
+  }
+}
